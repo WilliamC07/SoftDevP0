@@ -1,0 +1,6 @@
+bhuiyanS -- 2019-10-18 22:12 
+Completed database schema for the blog site.
+
+bhuiyanS -- 2019-10-20 17:27
+Uploaded database schema to design doc.
+Described the Python file that will interact with the database including examples of functions and their purposes.
