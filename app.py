@@ -5,6 +5,8 @@ from flask import request
 from flask import redirect
 from flask import url_for
 from flask import session
+from flask import flash
+from data import db_manager, db_builder
 # imported Flask, render_template, request, redirect, url_for, and session
 app = Flask(__name__)
 #create instance of class Flask
@@ -20,16 +22,33 @@ def root():
 @app.route("/login")
 def login():
     if len(request.args) == 2:
-        if verifyLogin(request.args["username"], request.args["password"]):
+        response = db_manager.verifyLogin(request.args["username"], request.args["password"])
+        if "" == response:
             session["username"] = request.args["username"]
             #session["id"] = <get id from db>
+            return redirect(url_for("home"))
         else:
-            flash("some message")
+            flash(response)
     return render_template("login/login.html")
+
+@app.route("/create-account")
+def createAccount():
+    if len(request.args) == 3:
+        if request.args["passwordNew"] != request.args["passwordRepeat"]:
+            flash("Passwords don't match, try again")
+        else:
+            response = db_manager.addLogin(request.args["username"], request.args["passwordNew"])
+            if "" == response:
+                session["username"] = request.args["username"]
+                #session["id"] = <get id from db>
+                return redirect(url_for("home"))
+            else:
+                flash(response)
+    return render_template("login/create-account.html")
 
 @app.route("/home")
 def home():
-    return ""
+    return "welcome home - home.html to be added"
 
 
 
