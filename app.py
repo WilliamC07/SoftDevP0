@@ -16,14 +16,13 @@ app.secret_key = os.urandom(32)
 def root():
     if "username" in session:
         return redirect(url_for("home"))
-    else:
-        return redirect(url_for("login"))
+    return redirect(url_for("login"))
 
 @app.route("/login")
 def login():
     if len(request.args) == 2:
         response = db_manager.verifyLogin(request.args["username"], request.args["password"])
-        if "" == response:
+        if response == "":
             session["username"] = request.args["username"]
             #session["id"] = <get id from db>
             return redirect(url_for("home"))
@@ -32,13 +31,13 @@ def login():
     return render_template("login/login.html")
 
 @app.route("/create-account")
-def createAccount():
+def create_account():
     if len(request.args) == 3:
         if request.args["passwordNew"] != request.args["passwordRepeat"]:
             flash("Passwords don't match, try again")
         else:
             response = db_manager.addLogin(request.args["username"], request.args["passwordNew"])
-            if "" == response:
+            if response == "":
                 session["username"] = request.args["username"]
                 #session["id"] = <get id from db>
                 return redirect(url_for("home"))
