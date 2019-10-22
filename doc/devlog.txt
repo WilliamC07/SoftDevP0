@@ -11,5 +11,7 @@ SQLite databases can be relational - tables can be associated using foreign keys
 We have access to the clauses: INNER JOIN, LEFT JOIN, and CROSS JOIN.
 They can be used to combine columns from related tables in different ways.
 INNER JOIN: returns rows from the correlated tables based on a certain criteria, given that there is a corresponding row in ALL the correlated tables.
+  - Can be used to link the user_name from users table to blog_name from blogs table based on the user_id/blog_author_id so that only the names of users with existing blogs will be returned
 LEFT JOIN: returns rows from the correlated tables (A and B) based on a certain criteria, unlike INNER JOIN, if there is no corresponding row in B, the row in table B is filled with NULL (In short, all rows in table A will be included)
+  - Can be used to link blog_name from blogs table to entry_title from entries table baed on the blog_id/entry_blog so that the NULLs can signal if a blog does not have any entries.
 CROSS JOIN: return from the correlated tables by combines every row from one of the tables with every row from the second table
