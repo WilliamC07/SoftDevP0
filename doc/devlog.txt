@@ -5,7 +5,6 @@ bhuiyanS -- 2019-10-20 17:27
 Uploaded database schema to design doc.
 Described the Python file that will interact with the database including examples of functions and their purposes.
 
-They can be used to combine columns from related tables in different ways.
 caoW -- 2019-10-21 21:25
 Corrected and cleared up questions/comments from today's review session:
 - Removed named routes since we did not learn it yet and there is no comment on it in the assignment page. We are
@@ -15,6 +14,7 @@ SPEW -- 2019-10-21 20:58
 SQLite join clauses are used query and match data from rows in different tables.
 SQLite databases can be relational - tables can be associated using foreign keys.
 We have access to the clauses: INNER JOIN, LEFT JOIN, and CROSS JOIN.
+They can be used to combine columns from related tables in different ways.
 
 Database:
 INNER JOIN: returns rows from the correlated tables based on a certain criteria, given that there is a corresponding row in ALL the correlated tables.
