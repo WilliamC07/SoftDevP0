@@ -29,3 +29,10 @@ prevent merge conflicts and ensure everyone is up-to-date with the current state
 2. Functions should do as few things as possible. Someone using the function should not spend more than a few
 seconds reading the code/function name/function doc to understand what it does.
 3. The only style guide to follow is PEP. If PEP is the law.
+
+bhuiyanS -- 2019-10-22 09:25
+Created a login_db branch to work on database login functions.
+Created spews.db and users table using db_builder.py.
+
+bhuiyanS -- 2019-10-22 10:40
+Created addLogin and verifyLogin functions in db_manager.py and completed tests.
