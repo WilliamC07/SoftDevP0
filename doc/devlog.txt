@@ -39,3 +39,6 @@ Created addLogin and verifyLogin functions in db_manager.py and completed tests.
 
 bhuiyanS -- 2019-10-22 17:12
 Updated functions in db_manager.py to return appropriate response instead of text.
+
+chenE -- 2019-10-22 17:39
+Created login.html and create-account.html
