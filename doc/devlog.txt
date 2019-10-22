@@ -7,7 +7,9 @@ Described the Python file that will interact with the database including example
 
 They can be used to combine columns from related tables in different ways.
 caoW -- 2019-10-21 21:25
-Corrected and cleared up questions/comments from today's review session.
+Corrected and cleared up questions/comments from today's review session:
+- Removed named routes since we did not learn it yet and there is no comment on it in the assignment page. We are
+just using a static route and handling different views sending GET requests. 
 
 SPEW -- 2019-10-21 20:58
 SQLite join clauses are used query and match data from rows in different tables.
