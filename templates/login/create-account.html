@@ -11,16 +11,18 @@
                 {% endfor %}
             </ul>
         {% endwith %}
-        <form action = "/auth" method="GET">
-            <label>Username</label>
+        <form action = "/create-account" method="GET">
+            <label>Enter Username</label>
             <input type="text" name="username">
             <br>
-            <label>Password</label>
-            <input type="text" name="password">
-            <label> Enter Password Again: </label>
+            <label>Enter Password</label>
             <input type="text" name="passwordNew">
+            <br>
+            <label> Enter Password Again: </label>
+            <input type="text" name="passwordRepeat">
+            <br>
+            <br>
             <input type="submit" value="Submit">
-            <input type = "submit"  value = "Create Account" action = "/create-account">
         </form>
     </body>
 </html>
