@@ -5,11 +5,6 @@ bhuiyanS -- 2019-10-20 17:27
 Uploaded database schema to design doc.
 Described the Python file that will interact with the database including examples of functions and their purposes.
 
-caoW -- 2019-10-21 21:25
-Corrected and cleared up questions/comments from today's review session:
-- Removed named routes since we did not learn it yet and there is no comment on it in the assignment page. We are
-just using a static route and handling different views sending GET requests. 
-
 SPEW -- 2019-10-21 20:58
 SQLite join clauses are used query and match data from rows in different tables.
 SQLite databases can be relational - tables can be associated using foreign keys.
@@ -29,3 +24,14 @@ prevent merge conflicts and ensure everyone is up-to-date with the current state
 2. Functions should do as few things as possible. Someone using the function should not spend more than a few
 seconds reading the code/function name/function doc to understand what it does.
 3. The only style guide to follow is PEP. If PEP is the law.
+
+caoW -- 2019-10-21 21:25
+Corrected and cleared up questions/comments from today's review session:
+- Removed named routes since we did not learn it yet and there is no comment on it in the assignment page. We are
+just using a static route and handling different views sending GET requests.
+
+huangP -- 2019-10-22 17:09
+Added routes /, /login, /create-account, /home. The root route will redirect to /login if user is not logged in and to /home if user is logged in.
+/login loads the login.html page and checks the entered username and password with the database; if it matches the database, redirect to /home, else, flash error message retrieved from database
+/create-account loads create-account.html and checks to make sure passwords entered match and that username does not already exist; if there are no errors, user credentials are adde to database and redirect to /home, else flash error message.
+/home will be worked on later.
