@@ -1,4 +1,4 @@
-bhuiyanS -- 2019-10-18 22:12 
+bhuiyanS -- 2019-10-18 22:12
 Completed database schema for the blog site.
 
 bhuiyanS -- 2019-10-20 17:27
@@ -10,3 +10,13 @@ SQLite join clauses are used query and match data from rows in different tables.
 SQLite databases can be relational - tables can be associated using foreign keys.
 We have access to the clauses: INNER JOIN, LEFT JOIN, and CROSS JOIN.
 They can be used to combine columns from related tables in different ways.
+
+caoW -- 2019-10-21 21:25
+Corrected and cleared up questions/comments from today's review session.
+
+Procedures/protocols to optimize our workflow:
+1. We work at home in our separate branch and come to school to have a code review and merge to master. This will
+prevent merge conflicts and ensure everyone is up-to-date with the current state of the code base.
+2. Functions should do as few things as possible. Someone using the function should not spend more than a few
+seconds reading the code/function name/function doc to understand what it does.
+3. The only style guide to follow is PEP. If PEP is the law.
