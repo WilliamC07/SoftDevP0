@@ -38,7 +38,11 @@ bhuiyanS -- 2019-10-22 10:40
 Created addLogin and verifyLogin functions in db_manager.py and completed tests.
 
 bhuiyanS -- 2019-10-22 17:12
+<<<<<<< HEAD
 Updated functions in db_manager.py to return appropriate response instead of printing.
+
+chenE -- 2019-10-22 17:39
+Created login.html and create-account.html
 
 bhuiyanS -- 2019-10-22 17:53
 Resolved issues stemming from changing print to return: Database now saves properly after function is called.
