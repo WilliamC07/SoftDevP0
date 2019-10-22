@@ -4,3 +4,9 @@ Completed database schema for the blog site.
 bhuiyanS -- 2019-10-20 17:27
 Uploaded database schema to design doc.
 Described the Python file that will interact with the database including examples of functions and their purposes.
+
+bhuiyanS -- 2019-10-21 20:58
+SQLite join clauses are used query and match data from rows in different tables.
+SQLite databases can be relational - tables can be associated using foreign keys.
+We have access to the clauses: INNER JOIN, LEFT JOIN, and CROSS JOIN.
+They can be used to combine columns from related tables in different ways.
