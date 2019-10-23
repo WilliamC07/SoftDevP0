@@ -103,6 +103,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# database
+*.db
+*.sqlite
+*.sqlite3
 
 # BOSS XTRAS
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
