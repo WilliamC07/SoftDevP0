@@ -6,17 +6,7 @@
 
 import sqlite3
 
-db = sqlite3.connect("spew.db") #open if file exists, otherwise create
-c = db.cursor()                 #facilitate db ops
 
-#====================================================================================================
-
-c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT);") #create table for user login credentials
-c.execute("INSERT OR REPLACE INTO users(name, password) VALUES('admin', 'password');") #add admin login
-
-#====================================================================================================
-
-db.commit() #save changes
-db.close()  #close database
-
-#====================================================================================================
+def initialize_database(c: sqlite3.Cursor):
+    c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT);")
+    c.execute("INSERT OR REPLACE INTO users(name, password) VALUES('admin', 'password');")
