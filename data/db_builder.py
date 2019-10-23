@@ -11,9 +11,8 @@ c = db.cursor()                 #facilitate db ops
 
 #====================================================================================================
 
-c.execute("CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT);") #create table for user login credentials
-
-c.execute("INSERT INTO users(name, password) VALUES('admin', 'password');") #add admin login
+c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT);") #create table for user login credentials
+c.execute("INSERT OR REPLACE INTO users(name, password) VALUES('admin', 'password');") #add admin login
 
 #====================================================================================================
 
