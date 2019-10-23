@@ -35,3 +35,20 @@ Added routes /, /login, /create-account, /home. The root route will redirect to 
 /login loads the login.html page and checks the entered username and password with the database; if it matches the database, redirect to /home, else, flash error message retrieved from database
 /create-account loads create-account.html and checks to make sure passwords entered match and that username does not already exist; if there are no errors, user credentials are adde to database and redirect to /home, else flash error message.
 /home will be worked on later.
+
+bhuiyanS -- 2019-10-22 09:25
+Created a login_db branch to work on database login functions.
+Created spews.db and users table using db_builder.py.
+
+bhuiyanS -- 2019-10-22 10:40
+Created addLogin and verifyLogin functions in db_manager.py and completed tests.
+
+bhuiyanS -- 2019-10-22 17:12
+
+Updated functions in db_manager.py to return appropriate response instead of printing.
+
+chenE -- 2019-10-22 17:39
+Created login.html and create-account.html
+
+bhuiyanS -- 2019-10-22 17:53
+Resolved issues stemming from changing print to return: Database now saves properly after function is called.
