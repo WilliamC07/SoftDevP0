@@ -1,0 +1,14 @@
+{% extends "navigator.html" %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
+
+{% block body %}
+    Explore other Blogs!
+    {% for user in usernames %}
+        <form action = "/home" method = "GET">
+            <input type = "submit" name = "user" value = "{{user + "'s blogs"}}">
+        </form>
+    {% endfor %}
+{% endblock %}

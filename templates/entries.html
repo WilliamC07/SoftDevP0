@@ -1,0 +1,41 @@
+{% extends "navigator.html" %}
+
+{% block title %}
+    {{blog_name}}
+{% endblock %}
+
+{% block body %}
+    Here are {{blog_name}}'s Entries!
+    {% if isOwner %}
+        <br>
+        <br>
+        <form action = "/blogs/entries" method = "GET">
+            <input type = "text" name = "entry_title" placeholder = "New Entry Title">
+            <br>
+            <textarea rows = "5" cols = "36" name = "entry_content" placeholder = "Enter Entry Content"></textarea>
+            <br>
+            <input type = "submit" value = "Create Entry">
+        </form>
+        <br>
+        {% for entry in entries %}
+          <hr>
+          <form action = "/blogs/entries" method = "GET">
+              <input type = "text" name = "entry_title" value = {{entry["entry_title"]}}>
+              <br>
+              <textarea rows = "5" cols = "36" name = "entry_content">{{entry["entry_content"]}}</textarea>
+              <br>
+              <input type = "submit" name = "update" value = "Update">
+              <input type = "submit" name = "delete" value = "Delete">
+          </form>
+          <br>
+        {% endfor %}
+    {% else %}
+        {% for entry in entries %}
+          <hr>
+          {{entry[entry_title]}}
+          <br>
+          {{entry[entry_content]}}
+          <br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
