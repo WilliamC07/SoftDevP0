@@ -8,10 +8,11 @@
         <form action = "/logout">
             Hello, {{username}}
             <input type="submit" value="Log Out">
-            <input type="submit" value="My Blogs" formaction="/blogs">
+            <input type="submit" name = "myblogs" value="My Blogs" formaction="/blogs">
         </form>
         {% endblock %}
         <hr>
+        <br>
         {% block body %}
             THIS IS THE BODY
         {% endblock %}
