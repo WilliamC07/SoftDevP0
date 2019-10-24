@@ -56,13 +56,18 @@ def create_account():
 def home():
     if "username" not in session:
         return redirect(url_for("login"))
-    # get username from session
-    # need: function from database to get list of all usernames with blogs
-    return "welcome home - home.html to be added"
+    blog_users = db_manager.get_usernames_with_blogs()
+    usr = session["username"]
+    if usr in blog_users:
+        blog_users.pop(usr)
+    return render_template("home.html", username=usr, usernames=blog_users)
 
 
 @app.route("/blogs")
 def blogs():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
@@ -71,6 +76,8 @@ def blogs():
 
 @app.route("/blogs/entries")
 def entries():
+    if "username" not in session:
+        return redirect(url_for("login"))
     # get username from session and get blog_id from frontend
     # need: function from database to return list of all entries for the blog
     #       functions (addEntry, updateEntry, is_owner) from database
@@ -84,7 +91,6 @@ def logout():
         session.pop("username")
     return redirect(url_for("login"))
     # pop session, redirect to /login
-    return ""
 
 
 if __name__ == "__main__":
