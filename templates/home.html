@@ -1,0 +1,14 @@
+{% extends "standard.html" %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
+
+{% block body %}
+    Explore other Blogs!
+    {% for user in usernames}
+        <form action = "/blogs" method = "GET">
+            <input type = "submit" value = {{user + "/'s blogs"}} name = {{user}}>
+        </form>
+    {% end for %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}STANDARD TITLE CHANGE{% endblock %}</title>
+    </head>
+    <body>
+        {% block header %}
+        <form action = "/logout">
+            Hello, {username}
+            <input type="submit" value="Log Out">
+            <input type="submit" value="My Blogs" formaction="/blogs">
+        </form>
+        {% endblock %}
+        <hr>
+        {% block body %}
+            THIS IS THE BODY
+        {% endblock %}
+    </body>
+</html>
