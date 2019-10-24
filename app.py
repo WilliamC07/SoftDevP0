@@ -12,7 +12,7 @@ app = Flask(__name__)
 #create instance of class Flask
 app.secret_key = os.urandom(32)
 
-@app.route("/", method="GET")
+@app.route("/")
 def root():
     if "username" in session:
         return redirect(url_for("home"))
@@ -30,7 +30,7 @@ def login():
             flash(response)
     return render_template("login/login.html")
 
-@app.route("/create-account", method="GET")
+@app.route("/create-account")
 def create_account():
     if len(request.args) == 3:
         if request.args["passwordNew"] != request.args["passwordRepeat"]:
@@ -51,14 +51,14 @@ def home():
     # need: function from database to get list of all users, beside the one logged in, with blogs
     return "welcome home - home.html to be added"
 
-@app.route("/blogs", method="GET")
+@app.route("/blogs")
 def blogs():
     # get username/id from session and get user_id from frontend
     # need: function from database to get all the blogs of the user with given user_id
     #       function (createBlog) from database
     return ""
 
-@app.route("/blogs/entries", method="GET")
+@app.route("/blogs/entries")
 def entries():
     # get username/id from session and get blog_id from frontend
     # need: function from database to return list of all entries for the blog
