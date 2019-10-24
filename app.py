@@ -20,6 +20,8 @@ def root():
 
 @app.route("/login")
 def login():
+    if "username" in session:
+        return redirect(url_for("home"))
     if len(request.args) == 2:
         response = db_manager.verifyLogin(request.args["username"], request.args["password"])
         if response == "":
@@ -32,6 +34,8 @@ def login():
 
 @app.route("/create-account")
 def create_account():
+    if "username" in session:
+        return redirect(url_for("home"))
     if len(request.args) == 3:
         if request.args["passwordNew"] != request.args["passwordRepeat"]:
             flash("Passwords don't match, try again")
@@ -47,12 +51,16 @@ def create_account():
 
 @app.route("/home")
 def home():
+    if "username" not in session:
+        return redirect(url_for("login"))
     # get username from session
     # need: function from database to get list of all users, beside the one logged in, with blogs
-    return "welcome home - home.html to be added"
+    return render_template("<something>.html", username = )
 
 @app.route("/blogs")
 def blogs():
+    if "username" not in session:
+        return redirect(url_for("login"))
     # get username/id from session and get user_id from frontend
     # need: function from database to get all the blogs of the user with given user_id
     #       function (createBlog) from database
@@ -60,6 +68,8 @@ def blogs():
 
 @app.route("/blogs/entries")
 def entries():
+    if "username" not in session:
+        return redirect(url_for("login"))
     # get username/id from session and get blog_id from frontend
     # need: function from database to return list of all entries for the blog
     #       functions (addEntry, updateEntry, verifyBlogAuthor) from database
@@ -68,6 +78,9 @@ def entries():
 
 @app.route("/logout")
 def logout():
+    if "username" in session:
+        session.pop("username")
+    return redirect(url_for("login"))
     # pop session, redirect to /login
     return ""
 
