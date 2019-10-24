@@ -1,4 +1,4 @@
-{% extends "standard.html" %}
+{% extends "navigator.html" %}
 
 {% block title %}
     Welcome!
@@ -6,9 +6,9 @@
 
 {% block body %}
     Explore other Blogs!
-    {% for user in usernames}
-        <form action = "/blogs" method = "GET">
-            <input type = "submit" value = {{user + "/'s blogs"}} name = {{user}}>
+    {% for user in usernames %}
+        <form action = "/home" method = "GET">
+            <input type = "submit" name = "user" value = "{{user + "'s blogs"}}">
         </form>
-    {% end for %}
+    {% endfor %}
 {% endblock %}

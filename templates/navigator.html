@@ -6,7 +6,7 @@
     <body>
         {% block header %}
         <form action = "/logout">
-            Hello, {username}
+            Hello, {{username}}
             <input type="submit" value="Log Out">
             <input type="submit" value="My Blogs" formaction="/blogs">
         </form>
