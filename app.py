@@ -47,9 +47,29 @@ def create_account():
 
 @app.route("/home")
 def home():
+    # get username from session
+    # need: function from database to get list of all users, beside the one logged in, with blogs
     return "welcome home - home.html to be added"
 
+@app.route("/blogs")
+def blogs():
+    # get username/id from session and get user_id from frontend
+    # need: function from database to get all the blogs of the user with given user_id
+    #       function (createBlog) from database
+    return ""
 
+@app.route("/blogs/entries")
+def entries():
+    # get username/id from session and get blog_id from frontend
+    # need: function from database to return list of all entries for the blog
+    #       functions (addEntry, updateEntry, verifyBlogAuthor) from database
+    #
+    return ""
+
+@app.route("/logout")
+def logout():
+    # pop session, redirect to /login
+    return ""
 
 if __name__ == "__main__":
     app.debug = True

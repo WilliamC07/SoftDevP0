@@ -1,12 +1,19 @@
-#====================================================================================================
+#===========================================================
 
 #db_builder is to be used to create the database and tables.
 
-#====================================================================================================
+#===========================================================
 
 import sqlite3
 
+db = sqlite3.connect("spew.db") #open if file exists, otherwise create
+c = db.cursor()                 #facilitate db ops
 
-def initialize_database(c: sqlite3.Cursor):
-    c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT);")
-    c.execute("INSERT OR REPLACE INTO users(name, password) VALUES('admin', 'password');")
+#======================================================================
+
+c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT);") #create table for user login credentials
+
+#=========================================================================================================================================
+
+db.commit() #save changes
+db.close()  #close database
