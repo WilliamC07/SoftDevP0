@@ -25,13 +25,16 @@ def login():
     if "username" in session:
         return redirect(url_for("home"))
     if len(request.args) == 2:
-        response = db_manager.verify_login(request.args["username"], request.args["password"])
-        if response == "":
-            session["username"] = request.args["username"]
-            #session["id"] = <get id from db>
-            return redirect(url_for("home"))
+        if "\'" in request.args["username"] or "\'" in request.args["password"]:
+            flash("Username and password cannot have single quotes")
         else:
-            flash(response)
+            response = db_manager.verify_login(request.args["username"], request.args["password"])
+            if response == "":
+                session["username"] = request.args["username"]
+                #session["id"] = <get id from db>
+                return redirect(url_for("home"))
+            else:
+                flash(response)
     return render_template("login/login.html")
 
 
@@ -59,7 +62,7 @@ def home():
     blog_users = db_manager.get_usernames_with_blogs()
     usr = session["username"]
     if usr in blog_users:
-        blog_users.pop(usr)
+        blog_users.remove(usr)
     return render_template("home.html", username=usr, usernames=blog_users)
 
 
@@ -67,7 +70,8 @@ def home():
 def blogs():
     if "username" not in session:
         return redirect(url_for("login"))
-
+    if "myblogs" in request.args:
+        render_template("")
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
@@ -75,7 +79,7 @@ def blogs():
 
 
 @app.route("/blogs/entries")
-def entries():
+def entries(blog_id):
     if "username" not in session:
         return redirect(url_for("login"))
     # get username from session and get blog_id from frontend
