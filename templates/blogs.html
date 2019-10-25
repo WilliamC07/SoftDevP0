@@ -1,11 +1,11 @@
 {% extends "navigator.html" %}
 
 {% block title %}
-    {{name}}'s Blogs
+    {{name}} Blogs
 {% endblock %}
 
 {% block body %}
-    Here are {{name}}'s Blogs!
+    Here are {{name}} Blogs!
     {% if isOwner %}
         <br>
         <br>
@@ -17,7 +17,7 @@
     <br>
     {% for blog in blogs %}
         <form action = "/blogs/entries" method = "GET">
-            <input type = "submit" name = "blog_name" value = {{blog["blog_title"]}}>
+            <input type = "submit" name = "blog_name" value = {{blog}}>
         </form>
         <br>
     {% endfor %}
