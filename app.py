@@ -23,17 +23,13 @@ def login():
     if "username" in session:
         return redirect(url_for("home"))
     if len(request.args) == 2:
-        if ("\'" in request.args["username"] or
-            "\'" in request.args["password"]):
-            flash("Username and password cannot have single quotes")
-        else:
-            response = db_manager.verify_login(request.args["username"],
+        response = db_manager.verify_login(request.args["username"],
                                                request.args["password"])
-            if response == "":
-                session["username"] = request.args["username"]
-                return redirect(url_for("home"))
-            else:
-                flash(response)
+        if response == "":
+            session["username"] = request.args["username"]
+            return redirect(url_for("home"))
+        else:
+            flash(response)
     return render_template("login/login.html")
 
 
