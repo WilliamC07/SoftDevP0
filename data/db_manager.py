@@ -9,7 +9,7 @@ import sqlite3
 def add_login(inputName, inputPassword): #facilitate adding new login credentials
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT * FROM users WHERE name = ?;" , inputName) #all instances of name in database
+    c.execute("SELECT * FROM users WHERE name = ?;" , (inputName, )) #all instances of name in database
     if c.fetchone() is None: #if name is not found in database
         c.execute("INSERT INTO users(name, password) VALUES(?, ?);" , (inputName, inputPassword)) #add login credentials
         db.commit() #save changes
