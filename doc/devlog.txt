@@ -36,6 +36,10 @@ Added routes /, /login, /create-account, /home. The root route will redirect to 
 /create-account loads create-account.html and checks to make sure passwords entered match and that username does not already exist; if there are no errors, user credentials are adde to database and redirect to /home, else flash error message.
 /home will be worked on later.
 
+caoW -- 2019-10-22 08:57
+Created initial files for project and set goals to complete the login system within two days.
+Created specification.txt to have backend and frontend work with each other more smoothly (frontend gives variables' type and content for backend to fillout)
+
 bhuiyanS -- 2019-10-22 09:25
 Created a login_db branch to work on database login functions.
 Created spews.db and users table using db_builder.py.
@@ -53,8 +57,19 @@ Created login.html and create-account.html
 bhuiyanS -- 2019-10-22 17:53
 Resolved issues stemming from changing print to return: Database now saves properly after function is called.
 
+caoW -- 2019-10-23 09:20
+Tried to debug issue with sqlite threading. (fixed by huangP)
+Continued updating design doc to match state of project (filling in smaller details and changes to simplify code)
+
 huangP -- 2019-10-23 23:13
 Planned out the routes needed for the blog pages and listed functions that would be required to make the routes work
 
+caoW -- 2019-10-24 9:20
+Wrote out function headers for database with type hints based on huangP comments (see 2019-10-23 23:13).
+Made database function names consistent with rest of code base.
+
 caoW -- 2019-10-24-20:01
 Updated README.md with new assignment details
+Updated design doc:
+    Cleared up confusing routing in sitemap
+    Updated "Backend (Flask)" section to match what we discussed earlier today
