@@ -1,12 +1,17 @@
----
-# P #00: Da Art of Storytellin' by Team SPEW
----
+# Spewing Blogs by Team SPEW
 
 ### Roster with Roles
-Saad Bhuiyan - Database <br>
-William Cao (Project Manager) - Frontend and Testing <br>
-Ethan Chen - Frontend and Testing <br>
-Peihua Huang - Backend <br>
+Saad Bhuiyan - Database  
+William Cao - Project Manager  
+Ethan Chen - Frontend and Testing   
+Peihua Huang - Backend
 
----
+### How to run this
+#### Dependencies:
+- Flask
 
+#### Setting up
+Install the following python libraries using the following
+```shell
+pip3 install flask 
+```

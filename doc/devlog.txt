@@ -55,3 +55,6 @@ Resolved issues stemming from changing print to return: Database now saves prope
 
 huangP -- 2019-10-23 23:13
 Planned out the routes needed for the blog pages and listed functions that would be required to make the routes work
+
+caoW -- 2019-10-24-20:01
+Updated README.md with new assignment details
