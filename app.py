@@ -70,12 +70,13 @@ def home():
 def blogs():
     if "username" not in session:
         return redirect(url_for("login"))
+    usr = session["username"]
     if "myblogs" in request.args:
-        render_template("")
+        return render_template("blogs.html", username=usr, name=usr)
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
-    return ""
+    return render_template("")
 
 
 @app.route("/blogs/entries")
