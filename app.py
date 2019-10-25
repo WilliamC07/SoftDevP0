@@ -22,19 +22,26 @@ def root():
 
 @app.route("/login")
 def login():
+    if "username" in session:
+        return redirect(url_for("home"))
     if len(request.args) == 2:
-        response = db_manager.verify_login(request.args["username"], request.args["password"])
-        if response == "":
-            session["username"] = request.args["username"]
-            #session["id"] = <get id from db>
-            return redirect(url_for("home"))
+        if "\'" in request.args["username"] or "\'" in request.args["password"]:
+            flash("Username and password cannot have single quotes")
         else:
-            flash(response)
+            response = db_manager.verify_login(request.args["username"], request.args["password"])
+            if response == "":
+                session["username"] = request.args["username"]
+                #session["id"] = <get id from db>
+                return redirect(url_for("home"))
+            else:
+                flash(response)
     return render_template("login/login.html")
 
 
 @app.route("/create-account")
 def create_account():
+    if "username" in session:
+        return redirect(url_for("home"))
     if len(request.args) == 3:
         if request.args["passwordNew"] != request.args["passwordRepeat"]:
             flash("Passwords don't match, try again")
@@ -50,21 +57,36 @@ def create_account():
 
 @app.route("/home")
 def home():
-    # get username from session
-    # need: function from database to get list of all usernames with blogs
-    return "welcome home - home.html to be added"
+    if "username" not in session:
+        return redirect(url_for("login"))
+    blog_users = db_manager.get_usernames_with_blogs()
+    usr = session["username"]
+    if usr in blog_users:
+        blog_users.remove(usr)
+    return render_template("home.html", username=usr, usernames=blog_users)
 
 
 @app.route("/blogs")
 def blogs():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    usr = session["username"]
+    if "myblogs" in request.args:
+        return render_template("blogs.html", username=usr, name=usr, isOwner=True)
+    if "blog_creation" in request.args:
+        response = db_manager.create_blog_for_username(usr, request.args["blog_creation"])
+        if response == "":
+            return redirect(url_for("entries", blog_id=))
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
-    return ""
+    return render_template("")
 
 
 @app.route("/blogs/entries")
-def entries():
+def entries(blog_id):
+    if "username" not in session:
+        return redirect(url_for("login"))
     # get username from session and get blog_id from frontend
     # need: function from database to return list of all entries for the blog
     #       functions (addEntry, updateEntry, is_owner) from database
@@ -74,8 +96,10 @@ def entries():
 
 @app.route("/logout")
 def logout():
+    if "username" in session:
+        session.pop("username")
+    return redirect(url_for("login"))
     # pop session, redirect to /login
-    return ""
 
 
 if __name__ == "__main__":
