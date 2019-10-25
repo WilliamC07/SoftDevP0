@@ -72,7 +72,11 @@ def blogs():
         return redirect(url_for("login"))
     usr = session["username"]
     if "myblogs" in request.args:
-        return render_template("blogs.html", username=usr, name=usr)
+        return render_template("blogs.html", username=usr, name=usr, isOwner=True)
+    if "blog_creation" in request.args:
+        response = db_manager.create_blog_for_username(usr, request.args["blog_creation"])
+        if response == "":
+            return redirect(url_for("entries", blog_id=))
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
