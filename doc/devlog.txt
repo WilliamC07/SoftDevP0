@@ -73,3 +73,9 @@ Updated README.md with new assignment details
 Updated design doc:
     Cleared up confusing routing in sitemap
     Updated "Backend (Flask)" section to match what we discussed earlier today
+
+caoW -- 2019-10-24-21:09
+Fixed up frontend
+    Fixed home.html: Syntax error
+    Fixed entries.html: Use tuple instead of dictionary for simplicity, added names to submit button to differentiate between update/create/delete
+    Improved design for blogs.html: Use tuple instead of dictionary, and use "<owner>'s blog" and "your blog" in header instead of just "<owner>'s blog"
