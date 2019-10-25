@@ -11,7 +11,7 @@ c = db.cursor()                 #facilitate db ops
 
 #======================================================================
 
-c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name UNIQUE TEXT, password TEXT);") #create table for user login credentials
+c.execute("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT);") #create table for user login credentials
 
 #=========================================================================================================================================
 
