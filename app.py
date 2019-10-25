@@ -59,6 +59,8 @@ def create_account():
 def home():
     if "username" not in session:
         return redirect(url_for("login"))
+    if "user" in request.args:
+        return redirect(url_for("blogs", user=request.args["user"]))
     blog_users = db_manager.get_usernames_with_blogs()
     usr = session["username"]
     if usr in blog_users:
@@ -66,32 +68,35 @@ def home():
     return render_template("home.html", username=usr, usernames=blog_users)
 
 
-@app.route("/blogs")
+@app.route("/blogs", methods=['GET'])
 def blogs():
     if "username" not in session:
         return redirect(url_for("login"))
     usr = session["username"]
-    if "myblogs" in request.args:
-        return render_template("blogs.html", username=usr, name=usr, isOwner=True)
+    user = usr
+    if "user" in request.args:
+        user = request.args["user"]
     if "blog_creation" in request.args:
-        response = db_manager.create_blog_for_username(usr, request.args["blog_creation"])
+        title = request.args["blog_name"]
+        response = db_manager.create_blog_for_username(usr, title)
         if response == "":
-            return redirect(url_for("entries", blog_id=))
+            return redirect(url_for("entries", blog_id=(db_manager.get_blog_id_from_title(usr, title)), blog_title=title))
+        flash(response)
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
-    return render_template("")
+    return render_template("blogs.html", username=usr, name=user, isOwner=True)
 
 
-@app.route("/blogs/entries")
-def entries(blog_id):
+@app.route("/blogs/entries", methods=['GET'])
+def entries():
     if "username" not in session:
         return redirect(url_for("login"))
+    return render_template("entries.html", blog_name=request.args["blog_title"], entries=db_manager.get_entries_for_blog(request.args["blog_id"]), isOwner=db_manager.is_owner(session["username"], request.args["blog_id"]))
     # get username from session and get blog_id from frontend
     # need: function from database to return list of all entries for the blog
     #       functions (addEntry, updateEntry, is_owner) from database
     #
-    return ""
 
 
 @app.route("/logout")
