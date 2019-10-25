@@ -7,9 +7,7 @@ from flask import url_for
 from flask import session
 from flask import flash
 from data import db_manager, db_builder
-# imported Flask, render_template, request, redirect, url_for, and session
 app = Flask(__name__)
-#create instance of class Flask
 app.secret_key = os.urandom(32)
 
 
@@ -25,13 +23,14 @@ def login():
     if "username" in session:
         return redirect(url_for("home"))
     if len(request.args) == 2:
-        if "\'" in request.args["username"] or "\'" in request.args["password"]:
+        if ("\'" in request.args["username"] or
+            "\'" in request.args["password"]):
             flash("Username and password cannot have single quotes")
         else:
-            response = db_manager.verify_login(request.args["username"], request.args["password"])
+            response = db_manager.verify_login(request.args["username"],
+                                               request.args["password"])
             if response == "":
                 session["username"] = request.args["username"]
-                #session["id"] = <get id from db>
                 return redirect(url_for("home"))
             else:
                 flash(response)
@@ -46,7 +45,8 @@ def create_account():
         if request.args["passwordNew"] != request.args["passwordRepeat"]:
             flash("Passwords don't match, try again")
         else:
-            response = db_manager.add_login(request.args["username"], request.args["passwordNew"])
+            response = db_manager.add_login(request.args["username"],
+                                            request.args["passwordNew"])
             if response == "":
                 session["username"] = request.args["username"]
                 return redirect(url_for("home"))
@@ -80,12 +80,14 @@ def blogs():
         title = request.args["blog_name"]
         response = db_manager.create_blog_for_username(usr, title)
         if response == "":
-            return redirect(url_for("entries", blog_id=(db_manager.get_blog_id_from_title(usr, title)), blog_title=title))
+            return redirect(url_for("entries",
+                                    blog_id=db_manager.get_blog_id_from_title(
+                                        usr, title),
+                                    blog_title=title))
         flash(response)
-    # get username from session and username of viewing blog from frontend
-    # need: function from database to get all the blogs' title of the user (should be recent first, need list)
-    #       function (createBlog) from database
-    return render_template("blogs.html", username=usr, name=user, isOwner=True, blogs=db_manager.get_blogs_for_username(user))
+    return render_template("blogs.html", username=usr,
+                           name=user, isOwner=True,
+                           blogs=db_manager.get_blogs_for_username(user))
 
 
 @app.route("/blogs/entries", methods=['GET'])
@@ -106,16 +108,19 @@ def entries():
         blog_id = db_manager.get_blog_id_from_title(user, blog_title)
     if "update" in request.args:
         db_manager.remove_entry(blog_id)
-        db_manager.add_entry(session["username"], request.args["entry_title"], request.args["entry_content"])
+        db_manager.add_entry(session["username"],
+                             request.args["entry_title"],
+                             request.args["entry_content"])
     if "delete" in request.args:
         db_manager.remove_entry(blog_id)
     if "create" in request.args:
-        db_manager.add_entry(session["username"], request.args["entry_title"], request.args["entry_content"])
-    return render_template("entries.html", blog_name=blog_title, entries=db_manager.get_entries_for_blog(blog_id), isOwner=db_manager.is_owner(session["username"], blog_id))
-    # get username from session and get blog_id from frontend
-    # need: function from database to return list of all entries for the blog
-    #       functions (addEntry, updateEntry, is_owner) from database
-    #
+        db_manager.add_entry(session["username"],
+                             request.args["entry_title"],
+                             request.args["entry_content"])
+    return render_template("entries.html", blog_name=blog_title,
+                           entries=db_manager.get_entries_for_blog(blog_id),
+                           isOwner=db_manager.is_owner(
+                               session["username"], blog_id))
 
 
 @app.route("/logout")
@@ -123,7 +128,6 @@ def logout():
     if "username" in session:
         session.pop("username")
     return redirect(url_for("login"))
-    # pop session, redirect to /login
 
 
 if __name__ == "__main__":
