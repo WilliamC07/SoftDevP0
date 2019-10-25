@@ -85,14 +85,33 @@ def blogs():
     # get username from session and username of viewing blog from frontend
     # need: function from database to get all the blogs' title of the user (should be recent first, need list)
     #       function (createBlog) from database
-    return render_template("blogs.html", username=usr, name=user, isOwner=True)
+    return render_template("blogs.html", username=usr, name=user, isOwner=True, blogs=db_manager.get_blogs_for_username(user))
 
 
 @app.route("/blogs/entries", methods=['GET'])
 def entries():
     if "username" not in session:
         return redirect(url_for("login"))
-    return render_template("entries.html", blog_name=request.args["blog_title"], entries=db_manager.get_entries_for_blog(request.args["blog_id"]), isOwner=db_manager.is_owner(session["username"], request.args["blog_id"]))
+    if "blog_title" in request.args:
+        blog_title = request.args["blog_title"]
+    else:
+        blog_title = request.args["blog_name"]
+    if "blog_id" in request.args:
+        blog_id = request.args["blog_id"]
+    else:
+        if "user" in request.args:
+            user = request.args["user"]
+        else:
+            user = session["username"]
+        blog_id = db_manager.get_blog_id_from_title(user, blog_title)
+    if "update" in request.args:
+        db_manager.remove_entry(blog_id)
+        db_manager.add_entry(session["username"], request.args["entry_title"], request.args["entry_content"])
+    if "delete" in request.args:
+        db_manager.remove_entry(blog_id)
+    if "create" in request.args:
+        db_manager.add_entry(session["username"], request.args["entry_title"], request.args["entry_content"])
+    return render_template("entries.html", blog_name=blog_title, entries=db_manager.get_entries_for_blog(blog_id), isOwner=db_manager.is_owner(session["username"], blog_id))
     # get username from session and get blog_id from frontend
     # need: function from database to return list of all entries for the blog
     #       functions (addEntry, updateEntry, is_owner) from database

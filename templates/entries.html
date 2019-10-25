@@ -14,6 +14,7 @@
             <br>
             <textarea rows = "5" cols = "36" name = "entry_content" placeholder = "Enter Entry Content"></textarea>
             <br>
+            <input type="hidden" name="blog_name" value={{blog_name}}>
             <input type = "submit" name="create" value = "Create Entry">
         </form>
         <br>
@@ -24,6 +25,7 @@
               <br>
               <textarea rows = "5" cols = "36" name = "entry_content">{{entry[1]}}</textarea>
               <br>
+              <input type="hidden" name="blog_name" value={{blog_name}}>
               <input type = "submit" name = "update" value = "Update">
               <input type = "submit" name = "delete" value = "Delete">
           </form>
@@ -39,3 +41,4 @@
         {% endfor %}
     {% endif %}
 {% endblock %}
+a

@@ -17,7 +17,8 @@
     <br>
     {% for blog in blogs %}
         <form action = "/blogs/entries" method = "GET">
-            <input type = "submit" name = "blog_name" value = {{blog}}>
+          <input type=hidden name="user" value={{name}}>
+          <input type = "submit" name = "blog_name" value = {{blog}}>
         </form>
         <br>
     {% endfor %}
