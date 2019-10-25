@@ -8,6 +8,13 @@
     Here are {{name}} Blogs!
     {% if isOwner %}
         <br>
+        {% with errors = get_flashed_messages() %}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endwith %}
         <br>
         <form action = "/blogs" method = "GET">
             <input type = "text" name = "blog_name" placeholder = "New Blog Title">
