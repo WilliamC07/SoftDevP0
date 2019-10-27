@@ -23,13 +23,16 @@ def login():
     if "username" in session:
         return redirect(url_for("home"))
     if len(request.args) == 2:
-        response = db_manager.verify_login(request.args["username"],
-                                               request.args["password"])
-        if response == "":
-            session["username"] = request.args["username"]
-            return redirect(url_for("home"))
+        if request.args["username"] == "" or request.args["password"] == "":
+            flash("Please do not leave any fields blank")
         else:
-            flash(response)
+            response = db_manager.verify_login(request.args["username"],
+                                               request.args["password"])
+            if response == "":
+                session["username"] = request.args["username"]
+                return redirect(url_for("home"))
+            else:
+                flash(response)
     return render_template("login/login.html")
 
 
@@ -38,16 +41,19 @@ def create_account():
     if "username" in session:
         return redirect(url_for("home"))
     if len(request.args) == 3:
-        if request.args["passwordNew"] != request.args["passwordRepeat"]:
-            flash("Passwords don't match, try again")
+        if request.args["username"] == "" or request.args["passwordNew"] == "" or request.args["passwordRepeat"] == "":
+            flash("Please do not leave any fields blank")
         else:
-            response = db_manager.add_login(request.args["username"],
-                                            request.args["passwordNew"])
-            if response == "":
-                session["username"] = request.args["username"]
-                return redirect(url_for("home"))
+            if request.args["passwordNew"] != request.args["passwordRepeat"]:
+                flash("Passwords don't match, try again")
             else:
-                flash(response)
+                response = db_manager.add_login(request.args["username"],
+                                                request.args["passwordNew"])
+                if response == "":
+                    session["username"] = request.args["username"]
+                    return redirect(url_for("home"))
+                else:
+                    flash(response)
     return render_template("login/create-account.html")
 
 
