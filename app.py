@@ -77,7 +77,7 @@ def blogs():
     usr = session["username"]
     user = usr
     if "user" in request.args:
-        user = request.args["user"]
+        user = request.args["user"][:len(request.args["user"]) - 8]
     if "blog_creation" in request.args:
         title = request.args["blog_name"]
         response = db_manager.create_blog_for_username(usr, title)
