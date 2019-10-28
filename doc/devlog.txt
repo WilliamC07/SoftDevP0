@@ -2,7 +2,7 @@ bhuiyanS -- 2019-10-18 22:12
 Completed database schema for the blog site.
 
 bhuiyanS -- 2019-10-20 17:27
-Uploaded database schema to design doc.
+Uploaded database schema to design.doc.
 Described the Python file that will interact with the database including examples of functions and their purposes.
 
 SPEW -- 2019-10-21 20:58
@@ -58,7 +58,7 @@ Resolved issues stemming from changing print to return: Database now saves prope
 
 caoW -- 2019-10-23 09:20
 Tried to debug issue with sqlite threading. (fixed by huangP)
-Continued updating design doc to match state of project (filling in smaller details and changes to simplify code)
+Continued updating design.doc to match state of project (filling in smaller details and changes to simplify code)
 
 huangP -- 2019-10-23 23:13
 Planned out the routes needed for the blog pages and listed functions that would be required to make the routes work
@@ -69,7 +69,7 @@ Made database function names consistent with rest of code base.
 
 caoW -- 2019-10-24 20:01
 Updated README.md with new assignment details
-Updated design doc:
+Updated design.doc:
     Cleared up confusing routing in sitemap
     Updated "Backend (Flask)" section to match what we discussed earlier today
 
@@ -77,7 +77,7 @@ caoW -- 2019-10-24 21:09
 Fixed up frontend
     Fixed home.html: Syntax error
     Fixed entries.html: Use tuple instead of dictionary for simplicity, added names to submit button to differentiate between update/create/delete
-    Improved design for blogs.html: Use tuple instead of dictionary, and use "<owner>'s blog" and "your blog" in header instead of just "<owner>'s blog"
+    Improved design.doc for blogs.html: Use tuple instead of dictionary, and use "<owner>'s blog" and "your blog" in header instead of just "<owner>'s blog"
     
 huangP -- 2019-10-27 15:57
 Made a check in /login and /create-account to prevent user from having empty usernames or password. Also fixed create-account.html so that it flashes an error message when it is supposed to.
@@ -85,7 +85,7 @@ Made a check in /login and /create-account to prevent user from having empty use
 bhuiyanS -- 2019-10-27 20:30
 Finished remaining db_manager.py functions: get_usernames_with_blogs(), get_blogs_for_username(username), create_blog_for_username(username, blog_title), get_entries_for_blog(blog_id), is_owner(username, blog_id), add_entry(entry_title, entry_content, blog_id), and remove_entry(entry_id).
 They all function correctly according to specification (designated by function signature and comment from template).
-Updated design document.
+Updated design.doc document.
 
 bhuiyanS -- 2019-10-27 20:52
 Added two functions - get_entry_id(entry_title, blog_id) and get_blog_id_from_title(username, blog_title) - to facilitate front end operations.
