@@ -128,3 +128,7 @@ Added a home button on navigator.html
 caoW -- 2019-10-27 23:42
 Final update to design.pdf
 Debugged error if no entry exists for blog
+
+chenE -- 2019-10-28 9:06
+Added specifications.txt
+Updated login.html and create-account.html by masking the password fields.
