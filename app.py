@@ -88,7 +88,7 @@ def blogs():
                                     blog_title=title))
         flash(response)
     return render_template("blogs.html", username=usr,
-                           name=user, isOwner=(user == usr),
+                           name=("Your" if user == usr else user), isOwner=(user == usr),
                            blogs=db_manager.get_blogs_for_username(user))
 
 
@@ -103,7 +103,7 @@ def entries():
     if "blog_id" in request.args:
         blog_id = request.args["blog_id"]
     else:
-        if "user" in request.args:
+        if "user" == "Your":
             user = request.args["user"]
         else:
             user = session["username"]
@@ -116,9 +116,11 @@ def entries():
     if "delete" in request.args:
         db_manager.remove_entry(db_manager.get_entry_id(request.args["entry_title"], blog_id))
     if "create" in request.args:
-        db_manager.add_entry(request.args["entry_title"],
-                             request.args["entry_content"],
-                             blog_id)
+        response = db_manager.add_entry(request.args["entry_title"],
+                                        request.args["entry_content"],
+                                        blog_id)
+        if response != "":
+            flash(response)
     return render_template("entries.html", blog_name=blog_title,
                            entries=db_manager.get_entries_for_blog(blog_id),
                            isOwner=db_manager.is_owner(
