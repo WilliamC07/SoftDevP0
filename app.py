@@ -88,7 +88,7 @@ def blogs():
                                     blog_title=title))
         flash(response)
     return render_template("blogs.html", username=usr,
-                           name=("your" if user == usr else user), isOwner=(user == usr),
+                           name=("Your" if user == usr else user), isOwner=(user == usr),
                            blogs=db_manager.get_blogs_for_username(user))
 
 
@@ -103,7 +103,7 @@ def entries():
     if "blog_id" in request.args:
         blog_id = request.args["blog_id"]
     else:
-        if "user" == "your":
+        if "user" == "Your":
             user = request.args["user"]
         else:
             user = session["username"]
