@@ -103,7 +103,7 @@ def entries():
     if "blog_id" in request.args:
         blog_id = request.args["blog_id"]
     else:
-        if "user" in request.args:
+        if "user" == "your":
             user = request.args["user"]
         else:
             user = session["username"]
