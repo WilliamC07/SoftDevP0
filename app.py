@@ -109,12 +109,12 @@ def entries():
             user = session["username"]
         blog_id = db_manager.get_blog_id_from_title(user, blog_title)
     if "update" in request.args:
-        db_manager.remove_entry(blog_id)
-        db_manager.add_entry(session["username"],
-                             request.args["entry_title"],
-                             request.args["entry_content"])
+        db_manager.remove_entry(entry_id)
+        db_manager.add_entry(request.args["entry_title"],
+                             request.args["entry_content"],
+                             blog_id)
     if "delete" in request.args:
-        db_manager.remove_entry(blog_id)
+        db_manager.remove_entry(entry_id)
     if "create" in request.args:
         db_manager.add_entry(session["username"],
                              request.args["entry_title"],

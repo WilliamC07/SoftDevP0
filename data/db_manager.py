@@ -55,6 +55,17 @@ def get_usernames_with_blogs(): #get usernames from blog titles
 #print(get_usernames_with_blogs())
 
 
+def get_blog_id_from_title(username, blog_title):
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT blog_id FROM blogs WHERE blog_author = ? AND blog_name = ?;" , (username, blog_title))
+    for row in c.fetchall(): #rows that are returned
+        id = row[0]
+    db.commit() #save changes
+    db.close() #close database
+    return id
+
+
 def get_blogs_for_username(username): #get names of blogs for a username
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
@@ -122,6 +133,17 @@ def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
     db.commit() #save changes
     db.close() #close database
     return status #return empty string if works, else return error message
+
+
+def get_entry_id(entry_title, blog_id):
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND blog_id = ?;" , (entry_title, blog_id))
+    for row in c.fetchall(): #rows that are returned
+        id = row[0]
+    db.commit() #save changes
+    db.close() #close database
+    return id
 
 
 def remove_entry(entry_id):
