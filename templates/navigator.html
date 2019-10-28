@@ -4,6 +4,7 @@
         <title>{% block title %}STANDARD TITLE CHANGE{% endblock %}</title>
     </head>
     <body>
+        <h1>Spewing Blogs!</h1>
         {% block header %}
         <form action = "/logout">
             Hello, {{username}}
@@ -17,5 +18,8 @@
         {% block body %}
             THIS IS THE BODY
         {% endblock %}
+        <div>
+            Website created by: Saad Bhuiyan, William Cao, Ethan Chen, Peihua Huang
+        </div>
     </body>
 </html>
