@@ -60,12 +60,22 @@ caoW -- 2019-10-23 09:20
 Tried to debug issue with sqlite threading. (fixed by huangP)
 Continued updating design.doc to match state of project (filling in smaller details and changes to simplify code)
 
+chenE -- 2019-10-23 9:32
+Created navigator.html, and started on home.html
+Updated create-account.html by adding a return to login button
+
 huangP -- 2019-10-23 23:13
 Planned out the routes needed for the blog pages and listed functions that would be required to make the routes work
+
+chenE -- 2019-10-23 20:15
+Finished home.html and fixed navigator.html syntax
 
 caoW -- 2019-10-24 9:20
 Wrote out function headers for database with type hints based on huangP comments (see 2019-10-23 23:13).
 Made database function names consistent with rest of code base.
+
+chenE -- 2019-10-24 19:40
+Created blogs.html and entries.html according to design
 
 caoW -- 2019-10-24 20:01
 Updated README.md with new assignment details
@@ -81,6 +91,9 @@ Fixed up frontend
     
 huangP -- 2019-10-27 15:57
 Made a check in /login and /create-account to prevent user from having empty usernames or password. Also fixed create-account.html so that it flashes an error message when it is supposed to.
+
+chenE -- 2019-10-27 18:31
+Added the code to flash errors onto blogs.html and entries.html
 
 bhuiyanS -- 2019-10-27 20:30
 Finished remaining db_manager.py functions: get_usernames_with_blogs(), get_blogs_for_username(username), create_blog_for_username(username, blog_title), get_entries_for_blog(blog_id), is_owner(username, blog_id), add_entry(entry_title, entry_content, blog_id), and remove_entry(entry_id).
@@ -108,6 +121,9 @@ Allowed messages to be flashed on entries page when the entry name repeats. Also
 
 bhuiyanS -- 2019-10-27 23:27
 Implemented ORDER BY in SQL queries so blogs and entries would be ordered by most recently updated on the site.
+
+chenE -- 2019-10-27 23:33
+Added a home button on navigator.html
 
 caoW -- 2019-10-27 23:42
 Final update to design.pdf
