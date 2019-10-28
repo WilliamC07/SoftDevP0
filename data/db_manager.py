@@ -44,8 +44,8 @@ def verify_login(input_name, input_password): #verify login credentials
 def get_usernames_with_blogs(): #get usernames from blog titles
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    usernames = [] #list of all usernames 
-    c.execute("SELECT blog_author FROM blogs;") #all blog authors 
+    usernames = [] #list of all usernames
+    c.execute("SELECT blog_author FROM blogs;") #all blog authors
     for tuple in c.fetchall(): #rows that are returned
         usernames.append(tuple[0]) #add  author/user name from tuple to list
     db.commit() #save changes
@@ -85,7 +85,7 @@ def create_blog_for_username(username, blog_title):
     c = db.cursor() #facilitate db ops
     status = ""
     c.execute("SELECT * FROM blogs WHERE blog_name = ? AND blog_author = ?;" , (blog_title, username))
-    if c.fetchone() is None:  
+    if c.fetchone() is None:
         c.execute("INSERT INTO blogs(blog_name, blog_author) VALUES (?, ?);" , (blog_title, username))
     else:
         status = "Blog already exists!"
@@ -108,14 +108,14 @@ def get_entries_for_blog(blog_id): #get every entry of a blog as tuples (title,c
     db.commit() #save changes
     db.close() #close database
     return entries
-    
+
 
 def is_owner(username, blog_id): #return boolean is a user is owner of a blog
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
     ownership = False
     c.execute("SELECT * FROM blogs WHERE blog_id = ? AND blog_author = ?;" , (blog_id, username))
-    if c.fetchone() is not None: 
+    if c.fetchone() is not None:
         ownership = True
     db.commit() #save changes
     db.close() #close database
@@ -127,9 +127,9 @@ def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
     c = db.cursor() #facilitate db ops
     status = ""
     c.execute("SELECT * FROM entries WHERE entry_blog = ? AND entry_title = ?;" , (blog_id, entry_title))
-    if c.fetchone() is None: 
+    if c.fetchone() is None:
         c.execute("INSERT INTO entries(entry_title, entry_content, entry_blog) VALUES (?, ?, ?);" , (entry_title, entry_content, blog_id))
-    else: 
+    else:
         status = "Entry title already exists in this blog!"
     db.commit() #save changes
     db.close() #close database
@@ -139,7 +139,7 @@ def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
 def get_entry_id(entry_title, blog_id):
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND blog_id = ?;" , (entry_title, blog_id))
+    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND entry_blog = ?;" , (entry_title, blog_id))
     for row in c.fetchall(): #rows that are returned
         id = row[0]
     db.commit() #save changes
@@ -154,7 +154,7 @@ def remove_entry(entry_id):
     status = ""
     if c.fetchone() is None:
         status = "Entry does not exist!"
-    else: 
+    else:
         c.execute("DELETE FROM entries WHERE entry_id = ?;" , (entry_id,))
     db.commit() #save changes
     db.close() #close database
