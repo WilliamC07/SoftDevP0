@@ -88,7 +88,7 @@ def blogs():
                                     blog_title=title))
         flash(response)
     return render_template("blogs.html", username=usr,
-                           name=user, isOwner=True,
+                           name=user, isOwner=(user == usr),
                            blogs=db_manager.get_blogs_for_username(user))
 
 
