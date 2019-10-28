@@ -6,12 +6,12 @@
 
 import sqlite3
 
-def add_login(inputName, inputPassword): #facilitate adding new login credentials
+def add_login(input_name, input_password): #facilitate adding new login credentials
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT * FROM users WHERE name = ?;" , (inputName, )) #all instances of name in database
+    c.execute("SELECT * FROM users WHERE user_name = ?;" , (input_name,)) #all instances of name in database
     if c.fetchone() is None: #if name is not found in database
-        c.execute("INSERT INTO users(name, password) VALUES(?, ?);" , (inputName, inputPassword)) #add login credentials
+        c.execute("INSERT INTO users(user_name, user_password) VALUES(?, ?);" , (input_name, input_password)) #add login credentials
         db.commit() #save changes
         db.close() #close database
         return ""
@@ -20,13 +20,14 @@ def add_login(inputName, inputPassword): #facilitate adding new login credential
         db.close() #close database
         return "Username exists!"
 
-# addLogin("admin", "password") #test adding login credentials with new name
-# addLogin("admin", "password") #test adding login credentials with existing name
+#print(add_login("admin", "password")) #test adding login credentials with new name
+#print(add_login("admin", "password")) #test adding login credentials with existing name
 
-def verify_login(inputName, inputPassword): #verify login credentials
+
+def verify_login(input_name, input_password): #verify login credentials
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT * FROM users WHERE name = ? AND password = ?;" , (inputName, inputPassword)) #any rows where the inputs match
+    c.execute("SELECT * FROM users WHERE user_name = ? AND user_password = ?;" , (input_name, input_password)) #any rows where the inputs match
     if c.fetchone() is not None: #if login credentials are found in database
         db.commit() #save changes
         db.close() #close database
@@ -36,41 +37,102 @@ def verify_login(inputName, inputPassword): #verify login credentials
         db.close() #close database
         return "Login credentials not found!"
 
-
-# verifyLogin("admin", "password") #test existing login
-# verifyLogin("admin", "fakePassword") #test fake login credentials
-
-
-def get_usernames_with_blogs() -> list:
-    pass
+#print(verify_login("admin", "password")) #test existing login
+#print(verify_login("admin", "fakePassword")) #test fake login credentials
 
 
-def get_blogs_for_username(username: str) -> list:
-    pass
+def get_usernames_with_blogs(): #get usernames from blog titles
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    usernames = [] #list of all usernames 
+    c.execute("SELECT blog_author FROM blogs;") #all blog authors 
+    for tuple in c.fetchall(): #rows that are returned
+        usernames.append(tuple[0]) #add  author/user name from tuple to list
+    db.commit() #save changes
+    db.close() #close database
+    return list(set(usernames)) #return without duplicate usernames
+
+#print(get_usernames_with_blogs())
 
 
-# return empty string if works, else return error message
-def create_blog_for_username(username: str, blog_title: str) -> str:
-    pass
+def get_blogs_for_username(username): #get names of blogs for a username
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    blogNames = [] #list of all the blog titles
+    c.execute("SELECT blog_name FROM blogs WHERE blog_author = ?;" , (username,)) #all instances of name in database
+    for tuple in c.fetchall(): #rows that are returned
+        blogNames.append(tuple[0]) #add blog name from tuple to list
+    db.commit() #save changes
+    db.close() #close database
+    return blogNames
+
+#print(get_blogs_for_username("admin"))
 
 
-# List of turples (title, content)
-def get_entries_for_blog(blog: int) -> list:
-    pass
+def create_blog_for_username(username, blog_title):
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT * FROM blogs WHERE blog_name = ? AND blog_author = ?;" , (blog_title, username))
+    status = ""
+    if c.fetchone is not None: 
+        status = "Blog already exists!"
+    else: 
+        c.execute("INSERT INTO blogs(blog_name, blog_author) VALUES (?, (SELECT user_name FROM users WHERE user_name = ?));" , (blog_title, username))
+    db.commit() #save changes
+    db.close() #close database
+    return status #return empty string if works
+
+#print(create_blog_for_username("admin", "admin's blog"))
+#print(create_blog_for_username("admin", "admin's blog"))
+#print(create_blog_for_username("admin", "admin's other blog"))
 
 
-def is_owner(username: str, blog_id: int) -> bool:
-    pass
+def get_entries_for_blog(blog_id): #get every entry of a blog as tuples (title,content)
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    entries = [] #list of tuples
+    c.execute("SELECT entry_title, entry_content FROM entries WHERE entry_blog = ?;" , (blog_id,))
+    entries = c.fetchall()
+    db.commit() #save changes
+    db.close() #close database
+    return entries
 
 
-# return empty string if works, else return error message
-def add_entry(username: str, blog_title: str, blog_content: str) -> str:
-    pass
+def is_owner(username, blog_id): #return boolean is a user is owner of a blog
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    ownership = False
+    c.execute("SELECT * FROM blogs WHERE blog_id = ? AND blog_author = ?;" , (blog_id, username))
+    if c.fetchone is not None: 
+        ownership = True
+    db.commit() #save changes
+    db.close() #close database
+    return ownership
 
 
-def remove_entry(blog_id: int):
-    pass
+def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT * FROM entries WHERE blog_id = ? AND entry_title = ?;" , (blog_id, entry_title))
+    status = ""
+    if c.fetchone() is not None: 
+        status = "Entry title already exists in this blog!"
+    else: 
+        c.execute("INSERT INTO entries(entry_title, entry_content, entry_blog) VALUES (?, ?, (SELECT blog_id FROM blogs WHERE blog_id = ?));" , (entry_title, entry_content, blog_id))
+    db.commit() #save changes
+    db.close() #close database
+    return status #return empty string if works, else return error message
 
 
-def replace_entry(blog_id: int, blog_title: str, blog_content: str) -> str:
-    pass
+def remove_entry(entry_id):
+    db = sqlite3.connect("spew.db") #open file
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT * FROM entries WHERE entry_id = ?;" , (entry_id,))
+    status = ""
+    if c.fetchone() is None:
+        status = "Entry does not exist!"
+    else: 
+        c.execute("DELETE FROM entries WHERE entry_id = ?;" , (entry_id,))
+    db.commit() #save changes
+    db.close() #close database
+    return status
