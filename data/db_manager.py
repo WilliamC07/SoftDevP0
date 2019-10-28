@@ -139,17 +139,10 @@ def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
 def get_entry_id(entry_title, blog_id):
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND entry_blog = ?;" , (entry_title, blog_id))
-<<<<<<< HEAD
-    if c.fetchone() is not None:
-        id = c.fetchone()
-    else:
-        id = None
-=======
     id = None
+    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND entry_blog = ?;" , (entry_title, blog_id))
     for row in c.fetchall(): #rows that are returned
         id = row[0]
->>>>>>> 232fcccfcba46374857d3871db7e3e6a75016bd4
     db.commit() #save changes
     db.close() #close database
     return id
