@@ -79,3 +79,7 @@ Fixed up frontend
     Fixed home.html: Syntax error
     Fixed entries.html: Use tuple instead of dictionary for simplicity, added names to submit button to differentiate between update/create/delete
     Improved design for blogs.html: Use tuple instead of dictionary, and use "<owner>'s blog" and "your blog" in header instead of just "<owner>'s blog"
+
+caoW -- 2019-10-27-23:42
+    Final update to design.pdf
+    Debugged error if no entry exists for blog

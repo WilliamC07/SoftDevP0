@@ -59,6 +59,7 @@ def get_blog_id_from_title(username, blog_title):
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
     c.execute("SELECT blog_id FROM blogs WHERE blog_author = ? AND blog_name = ?;" , (username, blog_title))
+    id = None
     for row in c.fetchall(): #rows that are returned
         id = row[0]
     db.commit() #save changes
