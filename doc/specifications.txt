@@ -1,0 +1,57 @@
+/login:
+    Login fields:
+        name=”username””password”
+        action=”/login” method=”GET”
+
+/create-account:
+    Create fields:
+        name=”username””passwordNew””passwordRepeat”
+        action=”/create-account” method=”GET”
+
+Both:
+    Flash:
+        Give the error as a list
+
+/home
+    render_template needs variables like:
+        username: username of currently logged in user
+        usernames: list of all usernames with blogs
+    Fields:
+        Name = “user”
+
+/blogs
+	  render_template needs variables like:
+		    -username: username of currently logged in (string)
+	      -name: blog’s owner (string)
+			       If user is looking at own blog, name should be “your”
+			       If user is looking at another user’s blog, name should be “<username>’s”
+		    -blogs: list of blog titles (strings)
+			       Blog titles should be in order from most recently updated/created to oldest
+        -isOwner: True if logged in user is owner of blog, False otherwise (bool)
+		    Sample
+          return render_template("blogs.html", username="William", name="bana's", blogs_title=["apples", "bananas"])
+          return render_template("blogs.html", username="William", name="your", blogs_title=["apples", "bananas"])
+	  fields returned to server (/blogs):
+        Key: “blog_name” Value: “<blog title>”
+            This is given to server when user clicks on a blog to view
+        If there is a key “blog_creation” that means user is creating a new blog.
+            Key: “blog_name” for blog title
+
+/blogs/entries
+    Render_template needs:
+        username: username of currently logged in (string)
+        isOwner: True if logged in user is owner of blog, False otherwise (bool)
+        blog_name: Name of blog user is currently looking at (string)
+        entries: list of tuples, with first element of tuple being entry title and second being entry body ([ (), (), ] MOST RECENTLY UPDATED TOP
+        Sample:
+            return render_template("entries.html", username="billy", isOwner=False, blog_name="Apples", entries=[("Second", "Hi second blog here"), ("Firt", "First!!!")])
+        Fields returned to server (only when user is viewing his/her own blog and modifying it):
+            If we are creating a new entry, there will be a key “create”:
+                Key “entry_title” for new entry title
+                Key “entry_content” for new entry content
+            If we are updating a new entry, there will be a key “update”:
+                Key “entry_title” for new entry title
+                Key “entry_content” for new entry content
+            If we are updating a new entry, there will be a key “delete”:
+                Key “entry_title” for new entry title
+                Key “entry_content” for new entry content
