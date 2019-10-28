@@ -124,12 +124,12 @@ def is_owner(username, blog_id): #return boolean is a user is owner of a blog
 def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT * FROM entries WHERE blog_id = ? AND entry_title = ?;" , (blog_id, entry_title))
     status = ""
-    if c.fetchone() is not None: 
-        status = "Entry title already exists in this blog!"
-    else: 
+    c.execute("SELECT * FROM entries WHERE entry_blog = ? AND entry_title = ?;" , (blog_id, entry_title))
+    if c.fetchone() is None: 
         c.execute("INSERT INTO entries(entry_title, entry_content, entry_blog) VALUES (?, ?, ?));" , (entry_title, entry_content, blog_id))
+    else: 
+        status = "Entry title already exists in this blog!"
     db.commit() #save changes
     db.close() #close database
     return status #return empty string if works, else return error message
