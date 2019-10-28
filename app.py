@@ -163,13 +163,17 @@ def entries():
     # set blog_title to blog name acquired from GET request
     user = session["username"]
     # set user to username of person logged in
+    blog_owner = user
+    # blog_owner is set to user by default
+    if "user" in request.args and request.args["user"] != "Your":
+        blog_owner = request.args["user"]
     if "blog_id" in request.args:
     # if blog_id is in GET request (which happens when blog is just created),
         blog_id = request.args["blog_id"]
         # set blog_id to that GET request
     else:
     # else if blog_id is not in GET request
-        blog_id = db_manager.get_blog_id_from_title(user, blog_title)
+        blog_id = db_manager.get_blog_id_from_title(blog_owner, blog_title)
         # get blog_id from database based on the username and blog_title
         # if user is not the owner of the blog, None is returned
     if len(request.args) == 4:

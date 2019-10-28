@@ -88,7 +88,7 @@ Fixed up frontend
     Fixed home.html: Syntax error
     Fixed entries.html: Use tuple instead of dictionary for simplicity, added names to submit button to differentiate between update/create/delete
     Improved design.doc for blogs.html: Use tuple instead of dictionary, and use "<owner>'s blog" and "your blog" in header instead of just "<owner>'s blog"
-    
+
 huangP -- 2019-10-27 15:57
 Made a check in /login and /create-account to prevent user from having empty usernames or password. Also fixed create-account.html so that it flashes an error message when it is supposed to.
 
@@ -108,7 +108,7 @@ bhuiyanS -- 2019-10-27 21:46
 Fixed issue where you could not create a new blog.
 
 huangP -- 2019-10-27 22:12
-Fixed bug that flashed an error that a blog already exists even though blog did not exist. Also fixed bug that allowed a user who is not the owner of the blogs create a blog. Finally fixed error in app.py due to an unknown variable. 
+Fixed bug that flashed an error that a blog already exists even though blog did not exist. Also fixed bug that allowed a user who is not the owner of the blogs create a blog. Finally fixed error in app.py due to an unknown variable.
 
 bhuiyanS -- 2019-10-27 22:15
 Fixed issue where you could not create a new entry.
@@ -117,7 +117,7 @@ bhuiyanS -- 2019-10-27 23:04
 Fixed issue where anyone could edit an entry because the is_owner() function would always return True. Fixed bug in get_entry_id().
 
 huangP -- 2019-10-27 23:25
-Allowed messages to be flashed on entries page when the entry name repeats. Also have /blogs webpage display “Your Blog” instead of “Username’s Blog” when the owner of the blogs is logged in. and then fixed issue with “Your” replacing the username by accident. 
+Allowed messages to be flashed on entries page when the entry name repeats. Also have /blogs webpage display “Your Blog” instead of “Username’s Blog” when the owner of the blogs is logged in. and then fixed issue with “Your” replacing the username by accident.
 
 bhuiyanS -- 2019-10-27 23:27
 Implemented ORDER BY in SQL queries so blogs and entries would be ordered by most recently updated on the site.
@@ -135,3 +135,6 @@ Updated login.html and create-account.html by masking the password fields.
 
 bhuiyanS -- 2019-10-28 09:52
 Added comments to db_builder.py and db_manager.py
+
+huangP -- 2019-10-28 11:42
+Finished adding comments to app.py and made the code more readable with better variable names. Also fixed bug pertaining to entries of another user's blog not showing up and having an empty entry title. 
