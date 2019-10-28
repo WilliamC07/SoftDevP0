@@ -70,7 +70,7 @@ def get_blogs_for_username(username): #get names of blogs for a username
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
     blogNames = [] #list of all the blog titles
-    c.execute("SELECT blog_name FROM blogs WHERE blog_author = ?;" , (username,)) #all instances of name in database
+    c.execute("SELECT blog_name FROM blogs WHERE blog_author = ? ORDER BY blog_last_update DESC;" , (username,)) #all instances of name in database
     for tuple in c.fetchall(): #rows that are returned
         blogNames.append(tuple[0]) #add blog name from tuple to list
     db.commit() #save changes
@@ -102,7 +102,7 @@ def get_entries_for_blog(blog_id): #get every entry of a blog as tuples (title,c
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
     entries = [] #list of tuples
-    c.execute("SELECT * FROM entries WHERE entry_blog = ?;" , (blog_id,))
+    c.execute("SELECT * FROM entries WHERE entry_blog = ? ORDER BY entry_last_update DESC;" , (blog_id,))
     for tuple in c.fetchall():
         entries.append(tuple[2:4])
     db.commit() #save changes
@@ -139,7 +139,7 @@ def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
 def get_entry_id(entry_title, blog_id):
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
-    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND blog_id = ?;" , (entry_title, blog_id))
+    c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND entry_blog = ?;" , (entry_title, blog_id))
     for row in c.fetchall(): #rows that are returned
         id = row[0]
     db.commit() #save changes
