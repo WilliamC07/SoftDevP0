@@ -139,7 +139,7 @@ def blogs():
                 return redirect(url_for("entries",
                                         blog_id=db_manager.get_blog_id_from_title(
                                             user, title),
-                                        blog_title=title))
+                                        blog_name=title))
                 # redirect to the entries page of the new blog with
                 # the blog title and blog id as GET requests
             flash(response)
@@ -156,43 +156,73 @@ def blogs():
 @app.route("/blogs/entries", methods=['GET'])
 def entries():
     if "username" not in session:
+    # if user is not logged in,
         return redirect(url_for("login"))
-    if "blog_title" in request.args:
-        blog_title = request.args["blog_title"]
-    else:
-        blog_title = request.args["blog_name"]
+        # redirect to login page
+    blog_title = request.args["blog_name"]
+    # set blog_title to blog name acquired from GET request
+    user = session["username"]
+    # set user to username of person logged in
     if "blog_id" in request.args:
+    # if blog_id is in GET request (which happens when blog is just created),
         blog_id = request.args["blog_id"]
+        # set blog_id to that GET request
     else:
-        if "user" == "Your":
-            user = request.args["user"]
-        else:
-            user = session["username"]
+    # else if blog_id is not in GET request
         blog_id = db_manager.get_blog_id_from_title(user, blog_title)
+        # get blog_id from database based on the username and blog_title
+        # if user is not the owner of the blog, None is returned
+    if len(request.args) == 4:
+    # if the length of GET requests is 4, meaning user is updating, deleting,
+    # or creating entries,
+        entry_title = request.args["entry_title"]
+        entry_content = request.args["entry_content"]
+        # set entry_title and entry_content based on the GET requests
     if "update" in request.args:
-        db_manager.remove_entry(db_manager.get_entry_id(request.args["entry_title"], blog_id))
-        db_manager.add_entry(request.args["entry_title"],
-                             request.args["entry_content"],
+    # if user is updating an entry
+        db_manager.remove_entry(db_manager.get_entry_id(entry_title, blog_id))
+        # tell database to remove the entry
+        db_manager.add_entry(entry_title,
+                             entry_content,
                              blog_id)
+        # create a new entry in database with the same blog_id and entry_title,
+        # but with the updated content
     if "delete" in request.args:
-        db_manager.remove_entry(db_manager.get_entry_id(request.args["entry_title"], blog_id))
+    # if user is deleting an entry
+        db_manager.remove_entry(db_manager.get_entry_id(entry_title, blog_id))
+        # tell database to remove the entry after getting its entry_id given
+        # entry_title and blog_id
     if "create" in request.args:
-        response = db_manager.add_entry(request.args["entry_title"],
-                                        request.args["entry_content"],
-                                        blog_id)
-        if response != "":
-            flash(response)
+    # if user is creating entry
+        if entry_title == "":
+        # if entry_title is blank,
+            flash("Please do not have a blank entry title")
+            # flash an error
+        else:
+            response = db_manager.add_entry(entry_title,
+                                            entry_content,
+                                            blog_id)
+            # tell database to add entry given the entry_title, entry_content,
+            # and blog_id
+            if response != "":
+            # if entry was not added successfully (because of duplicate title),
+                flash(response)
+                # flash an error
     return render_template("entries.html", blog_name=blog_title,
                            entries=db_manager.get_entries_for_blog(blog_id),
                            isOwner=db_manager.is_owner(
-                               session["username"], blog_id))
+                               user, blog_id))
+    # render entries.html template given blog_name, list of entries, and isOwner
 
 
 @app.route("/logout")
 def logout():
     if "username" in session:
+    # if user is logged in
         session.pop("username")
+        # pop "username" from session (logging the user out)
     return redirect(url_for("login"))
+    # redirect user back to login page
 
 
 if __name__ == "__main__":
