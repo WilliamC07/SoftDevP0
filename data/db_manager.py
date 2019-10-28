@@ -102,12 +102,13 @@ def get_entries_for_blog(blog_id): #get every entry of a blog as tuples (title,c
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
     entries = [] #list of tuples
-    c.execute("SELECT entry_title, entry_content FROM entries WHERE entry_blog = ?;" , (blog_id,))
-    entries = c.fetchall()
+    c.execute("SELECT * FROM entries WHERE entry_blog = ?;" , (blog_id,))
+    for tuple in c.fetchall():
+        entries.append(tuple[2:4])
     db.commit() #save changes
     db.close() #close database
     return entries
-
+    
 
 def is_owner(username, blog_id): #return boolean is a user is owner of a blog
     db = sqlite3.connect("spew.db") #open file
@@ -127,7 +128,7 @@ def add_entry(entry_title, entry_content, blog_id): #CHANGED INPUTS!
     status = ""
     c.execute("SELECT * FROM entries WHERE entry_blog = ? AND entry_title = ?;" , (blog_id, entry_title))
     if c.fetchone() is None: 
-        c.execute("INSERT INTO entries(entry_title, entry_content, entry_blog) VALUES (?, ?, ?));" , (entry_title, entry_content, blog_id))
+        c.execute("INSERT INTO entries(entry_title, entry_content, entry_blog) VALUES (?, ?, ?);" , (entry_title, entry_content, blog_id))
     else: 
         status = "Entry title already exists in this blog!"
     db.commit() #save changes
