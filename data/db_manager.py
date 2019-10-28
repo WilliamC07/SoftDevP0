@@ -140,8 +140,10 @@ def get_entry_id(entry_title, blog_id):
     db = sqlite3.connect("spew.db") #open file
     c = db.cursor() #facilitate db ops
     c.execute("SELECT entry_id FROM entries WHERE entry_title = ? AND entry_blog = ?;" , (entry_title, blog_id))
-    for row in c.fetchall(): #rows that are returned
-        id = row[0]
+    if c.fetchone() is not None:
+        id = c.fetchone()
+    else:
+        id = None
     db.commit() #save changes
     db.close() #close database
     return id
