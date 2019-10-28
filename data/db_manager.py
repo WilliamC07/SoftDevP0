@@ -115,7 +115,7 @@ def is_owner(username, blog_id): #return boolean is a user is owner of a blog
     c = db.cursor() #facilitate db ops
     ownership = False
     c.execute("SELECT * FROM blogs WHERE blog_id = ? AND blog_author = ?;" , (blog_id, username))
-    if c.fetchone is not None: 
+    if c.fetchone() is not None: 
         ownership = True
     db.commit() #save changes
     db.close() #close database
