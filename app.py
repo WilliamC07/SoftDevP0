@@ -10,6 +10,7 @@ from flask import flash
 from data import db_manager, db_builder
 # import database functions
 app = Flask(__name__)
+# Must be replaced by a static long random string. How to: http://flask.palletsprojects.com/en/1.1.x/config/#configuring-from-environment-variables
 app.secret_key = os.urandom(32)
 # set up sessions with random secret key
 
